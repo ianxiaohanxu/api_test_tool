@@ -1,0 +1,72 @@
+{
+    "demo": {
+        "uri": "/api/v1/demo.json",
+        "method": "POST",
+        "auth": ["alex@gatherhealth.com", "123456"],
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": {   "doctor_name": "doctor{random}",
+                    "nurse_name": "nurse_{doctor_name}",
+                    "bg_units": "0",
+                    "height_units": "0",
+                    "language_code": "en",
+                    "country": "IN",
+                    "period": 12,
+                    "data": "4100",
+                    "billing_enabled": true,
+                    "app_branding": "gather-health",
+                    "notes": "abc_{doctor_name}_{nurse_name}"
+        },
+        "status_code": 200,
+        "verification": [ "key", "id" ]
+    },
+    "demo1": {
+        "uri": "/api/v1/demo.json",
+        "method": "POST",
+        "auth": ["alex@gatherhealth.com", "123456"],
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": {   "doctor_name": "doctor{random}",
+                    "nurse_name": "nurse_{doctor_name}",
+                    "bg_units": "0",
+                    "height_units": "0",
+                    "language_code": "en",
+                    "country": "IN",
+                    "period": 12,
+                    "data": "4100",
+                    "billing_enabled": true,
+                    "app_branding": "gather-health",
+                    "notes": "abc_{doctor_name}_{nurse_name}"
+        },
+        "status_code": 200,
+        "verification": [ "key", "id" ]
+    },
+
+    "patient": {
+        "uri": "/api/v1/patients.json",
+        "method": "POST",
+        "auth": ["doctor@gatherhealth.com", "{demo1[key]}"],
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": {   "first_name": "test{random}",
+                    "last_name": "test",
+                    "language": "en",
+                    "phone1_country": "91",
+                    "phone1": "1234567890",
+                    "is_study": false,
+                    "practice_id": "{demo[id]}",
+                    "sex": "0",
+                    "study_id": "",
+                    "state": 2,
+                    "dob": "1987-09-09",
+                    "email": "{first_name}@{last_name}.com",
+                    "patient_phone_type": ""
+                
+        },
+        "status_code": 201,
+        "verification":[ "id", {"first_name": "{first_name}"}, {"subscription":"expire_date"}, {"subscription": {"expire_date": null}} ] 
+}
+}
