@@ -173,7 +173,8 @@ class request_api():
 
         response = requests.request(self.api[api_name]['method'], self.host+self.api[api_name]['uri'], json=self.api[api_name]['data'], headers=self.api[api_name]['headers'], auth=tuple(self.api[api_name]['auth']))
         assert response.status_code==self.api[api_name]["status_code"], "Status code should be %d, but now it is %d." %(self.api[api_name]["status_code"], response.status_code)
-        self._verify_resp(response.json(), self.api[api_name]["verification"])
+        if len(self.api[api_name]["verification"])>0:
+            self._verify_resp(response.json(), self.api[api_name]["verification"])
         # Add to response stack if not included
         if api_name not in self.resp_stack:
             self.resp_stack[api_name] = response
@@ -193,8 +194,18 @@ def test_api(host, api_dict, api_name, resp_stack=None):
     print "*INFO*Status code is: %s" %resp.status_code
     print "*INFO*Request URL is: %s" %resp.url
     print "*INFO*Request method is: %s" %resp.request.method
-    print "*INFO*Responsed json is:\n%s " %resp.json()
+    try:
+        resp_json = resp.json()
+        print "*INFO*Responsed json is:\n%s " %resp_json
+    except:
+        pass
     print "*INFO*Responsed headers is:\n%s" %resp.headers
     print "*INFO*Request headers is:\n%s" %resp.request.headers
     print "*INFO*Request body is:\n%s" %resp.request.body
 
+'''
+import simplejson as json
+with open('gather.json', 'r') as fb:
+    a=json.load(fb)
+test_api('http://localhost:8000', a, 'register')
+'''

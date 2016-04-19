@@ -1,4 +1,33 @@
 {
+    "baidu": {
+        "uri": "/",
+        "method": "GET",
+        "tags": ["smoke", "regression"],
+        "auth": [],
+        "headers": {},
+        "data": {},
+        "status_code": 200,
+        "verification": []
+    },
+
+    "register": { 
+        "uri": "/api/v1/patients/{patient_id}/registrations.json",
+        "method": "POST",
+        "tags": ["regression"],
+        "auth": ["doctor@gatherhealth.com", "{demo[key]}"],
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "data": {
+            "patient_id": "{patient[id]}",
+            "practice": "{demo[id]}",
+            "patient_register_date": "2016-04-19",
+            "guru_last_contact": "2016-04-19"
+        },
+        "status_code": 201,
+        "verification": []
+    },
+
     "demo": {
         "uri": "/api/v1/demo.json",
         "method": "POST",
@@ -47,6 +76,6 @@
                 
         },
         "status_code": 201,
-        "verification":[ "id", {"first_name": "{first_name}"}, {"subscription":"expire_datfe"}, {"subscription": {"expire_date": null}} ] 
+        "verification":[ "id", {"first_name": "{first_name}"}, {"subscription":"expire_date"}, {"subscription": {"expire_date": null}} ] 
 }
 }
