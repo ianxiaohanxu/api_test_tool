@@ -1,5 +1,7 @@
-import re, time, copy,requests
-import simplejson as json
+from robot.api.deco import keyword
+import re, time, copy, requests
+
+__all__ = ["prepare_parent_api", "test_api"]
 
 class request_api():
     def __init__(self, host, api_data, api_name, resp_stack=None):
@@ -10,7 +12,7 @@ class request_api():
             resp_stack = {}
         self.resp_stack = resp_stack
     
-    def get_parent_api(self):
+    def _get_parent_api(self):
         '''
         Return a set of all parent apis in self.api
         '''
@@ -26,9 +28,11 @@ class request_api():
         '''
         Request each parent api, and get the response
         '''
-        for item in self.parent_api:
-            if item not in self.resp_stack:
-                self.api_request(item)
+        self._get_parent_api()
+        if len(self.parent_api)>0:
+            for item in self.parent_api:
+                if item not in self.resp_stack:
+                    self.api_request(item)
 
 
     def str_random(self, instr):
@@ -148,9 +152,9 @@ class request_api():
         '''
         for item in verification:
             if isinstance(item, (str, unicode)):
-                assert item in response_dict, "%s should be in response, but not." %str(item)
+                assert item in response_dict, "%s should be in response, but not.\nResponse json is:\n%s" %(str(item), str(response_dict))
             elif isinstance(item, dict):
-                assert self._verify_dict(response_dict, item), "%s should be in response, but not" %str(item)
+                assert self._verify_dict(response_dict, item), "%s should be in response, but not.\nResponse json is:\n%s" %(str(item), str(response_dict))
 
     def api_request(self, api_name=None):
         '''
@@ -176,55 +180,21 @@ class request_api():
 
         return response
 
+@keyword("PREPARE PARENT API")
+def prepare_parent_api(host, api_dict, api_name=None):
+    req = request_api(host, api_dict, api_name)
+    req.create_parent_api_response()
+    return req.resp_stack
 
-with open('234.json') as fb:
-    a = json.load(fb)
-r_a = request_api("http://localhost:8000", a, 'demo')
-'''
-dict1 = {
-    'id': 123,
-    'name': 'alex',
-    'data': {
-            'id': 234,
-            'name': 'gao',
-            'data': {
-                        'id': 345,
-                        'name': 'meng'
-            }
-    }
-}
-dict2 = { 'id': 123 }
-dict3 = { 'name': 'alex' }
-dict4 = { 'id': 234 }
-dict5 = { 'name': 'ff' }
-dict6 = { 'id': 123, 'name': 'alu' }
-dict7 = { 'id': 123, 'name': 'alex', 'data': {'id': 234, 'data':{ 'id': 345 }, 'name':'gao'} }
+@keyword("TEST API")
+def test_api(host, api_dict, api_name, resp_stack=None):
+    req = request_api(host, api_dict, api_name, resp_stack)
+    resp = req.api_request()
+    print "*INFO*Status code is: %s" %resp.status_code
+    print "*INFO*Request URL is: %s" %resp.url
+    print "*INFO*Request method is: %s" %resp.request.method
+    print "*INFO*Responsed json is:\n%s " %resp.json()
+    print "*INFO*Responsed headers is:\n%s" %resp.headers
+    print "*INFO*Request headers is:\n%s" %resp.request.headers
+    print "*INFO*Request body is:\n%s" %resp.request.body
 
-
-print r_a._verify_dict(dict1, dict2)
-print r_a._verify_dict(dict1, dict3)
-print r_a._verify_dict(dict1, dict4)
-print r_a._verify_dict(dict1, dict5)
-print r_a._verify_dict(dict1, dict6)
-print r_a._verify_dict(dict1, dict7)
-'''
-#r_a.data_random()
-#r_a.data_variable()
-#print r_a.api[r_a.api_name]
-#print a['demo']
-r_a.get_parent_api()
-r_a.create_parent_api_response()
-#r_a.api_request('demo')
-print r_a.resp_stack
-print r_a.parent_api
-'''
-for i in range(5):
-    time.sleep(1)
-    print i
-r_b = request_api("http://localhost:8000", a, 'patient', r_a.resp_stack)
-reqs = r_b.api_request()
-print r_b.resp_stack
-print reqs.status_code
-print reqs.json()
-print reqs.url
-'''

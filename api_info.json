@@ -2,28 +2,7 @@
     "demo": {
         "uri": "/api/v1/demo.json",
         "method": "POST",
-        "auth": ["alex@gatherhealth.com", "123456"],
-        "headers": {
-            "Content-Type": "application/json"
-        },
-        "data": {   "doctor_name": "doctor{random}",
-                    "nurse_name": "nurse_{doctor_name}",
-                    "bg_units": "0",
-                    "height_units": "0",
-                    "language_code": "en",
-                    "country": "IN",
-                    "period": 12,
-                    "data": "4100",
-                    "billing_enabled": true,
-                    "app_branding": "gather-health",
-                    "notes": "abc_{doctor_name}_{nurse_name}"
-        },
-        "status_code": 200,
-        "verification": [ "key", "id" ]
-    },
-    "demo1": {
-        "uri": "/api/v1/demo.json",
-        "method": "POST",
+        "tags": ["smoke", "regression"],
         "auth": ["alex@gatherhealth.com", "123456"],
         "headers": {
             "Content-Type": "application/json"
@@ -47,7 +26,8 @@
     "patient": {
         "uri": "/api/v1/patients.json",
         "method": "POST",
-        "auth": ["doctor@gatherhealth.com", "{demo1[key]}"],
+        "tags": ["smoke"],
+        "auth": ["doctor@gatherhealth.com", "{demo[key]}"],
         "headers": {
             "Content-Type": "application/json"
         },
@@ -67,6 +47,6 @@
                 
         },
         "status_code": 201,
-        "verification":[ "id", {"first_name": "{first_name}"}, {"subscription":"expire_date"}, {"subscription": {"expire_date": null}} ] 
+        "verification":[ "id", {"first_name": "{first_name}"}, {"subscription":"expire_datfe"}, {"subscription": {"expire_date": null}} ] 
 }
 }
