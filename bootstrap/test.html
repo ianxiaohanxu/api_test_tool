@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css" media="screen">
+        .right  {
+            float:  right;
+        }
+
+        .body_background    {
+            background-color:   #F4F5F5;
+        }
+
+        .container_padding  {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .small_padding  {
+            padding: 3px 6px;
+            height: 27px;
+         }
+
+        .remove_padding {
+            padding: 0px;
+         }
+
+        .fieldset_background    {
+            background-color:   white;
+            padding:    10px;
+            margin-bottom:  10px;
+            border-radius:  6px;
+            box-shadow: 0 1px 2px rgba(0,0,0,.15);
+        }
+
+        .side_bar   {
+            position: fixed;
+            height: 100%;
+            padding: 0px 15px 0px 15px;
+         }
+
+        .side_bar>div   {
+            height: 100%;
+         }
+
+        .case_list  {
+            height: 85%;
+            border: 1px solid #E5E5E5;
+            box-shadow: 1px 1px 2px black inset;
+         }
+
+        .case_list>div  {
+            height: 100%;
+            overflow-y: auto;
+            overflow-style: scrollbar;
+         }
+
+        div.case_list   {
+            padding-top: 12px;
+            padding-bottom: 12px;
+         }
+
+        .case_line  {
+            border-top: 1px solid #e5e5e5;
+            border-bottom: 1px solid #e5e5e5;
+            margin-bottom: -1px;
+         }
+
+        .case_line p {
+            word-wrap: break-word;
+         }
+
+        .case_line.active   {
+            background-color: #337ab7;
+            color: white;
+         }
+
+        .case_line:after    {
+            content: "";
+            display: block;
+            clear: both;
+         }
+
+        .case_line p {
+            margin-bottom: 0px;
+         }
+
+        .tags   {
+            display: inline-block;
+            background-color: #cccccc;
+            border-bottom: 0px;
+            padding: 0px 3px;
+            margin-bottom: 2px;
+            margin-right: 5px;
+         }
+
+         .active .tags  {
+            background-color: transparent;
+            color: #8db6cd;
+                   }
+
+        #list_title  {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 12px;
+            padding-bottom: 6px;
+            border-top: 1px solid #E5E5E5;
+            border-bottom: 1px solid #E5E5E5;
+            color: #737373;
+            font-size: 16px;
+         }
+
+        .remove_right_margin {
+            margin-right: 0px;
+         }
+
+        .error_border   {
+            border-color:   #FF6666;
+            background-color: #FFCCCC;
+        }
+
+        .form-group {
+            margin-bottom: 5px;
+         }
+
+        .inline_input_padding_right   {
+            padding-right:  2px;
+        }
+
+        .inline_input_padding_left  {
+            padding-left:   2px;
+        }
+
+        .inline_input_padding_both  {
+            padding-left:   2px;
+            padding-right:  2px;
+        }
+
+        .block_a    {
+            display:    block;
+            margin: 5px 3px 5px 0;
+            padding: 0 15px;
+            line-height: 30px;
+            border-radius:  15px;
+        }
+
+        .btn_margin {
+            margin-left: 10px;
+            margin-right: 10px;
+         }
+
+        .color_a    {
+            background-color: #CCFFCC;
+        }
+
+        .error_message  {
+            color:  red;
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .pre_format   {
+            white-space: pre-wrap;
+            max-height: 300px;
+        }
+
+        /*
+        .fixed_box  {
+            position:   fixed;
+            bottom: 30px;
+        }
+        */
+    </style>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+	<script type="text/javascript">
+	//document.domain = 'a.com';
+	//var ifr = document.createElement('iframe');
+	//ifr.src = 'http://www.baidu.com';
+	//ifr.style.display = 'none';
+	//document.body.appendChild(ifr);
+	/*
+	ifr.onload = function(){
+	    var doc = ifr.contentDocument || ifr.contentWindow.document;
+	    // 在这里操纵b.html
+	    alert(doc.getElementsByTagName("h1")[0].childNodes[0].nodeValue);
+	};
+	*/
+	</script>
+  </head>
+  <body class="body_background">
+	<div class="container container_padding" id="LG">
+		<div class="row">
+            <div class="side_bar" >
+                <div class="fieldset_background row remove_right_margin">
+                    <div class="col-xs-12">
+                        <div class="row form-group">
+                            <div class="col-xs-6 col-md-5 col-md-offset-1 remove_padding">
+                                <button id="#load_case" type="button" class="btn small_padding btn-primary">Load Cases</button>
+                            </div>
+                            <div class="col-xs-6 remove_padding">
+                                <button id="load_swagger" type="button" class="btn small_padding btn-primary">Load Swagger</button>
+                            </div>
+                        </div>
+                        <div class="row case_list form-group" >
+                            <div class="col-xs-12">
+                                <div class="case_line hide" name="case_reference">
+                                    <div class="col-xs-11 inline_input_padding_both">
+                                        <p><strong>reference</strong></p>
+                                    </div>
+                                    <div class="col-xs-1 inline_input_padding_both">
+                                        <button type="button" class="close" aria-label="close"><span aria-hidden="true">&times;</span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-xs-8 remove_padding">
+                                <input type="text" id="suite_name" class="form-control small_padding" required/>
+                                <span class="error_message hide">Cannot accept empty value!</span>
+                            </div>
+                            <div class="col-xs-4">
+                                <button id="save_suite" type="button" class="btn small_padding btn-primary">Save</button>
+                            </div>
+                        </div>
+                        <div class="row" style="height: 80px;">
+                            <div class="col-xs-12 remove_padding">
+                                <span class="help-block">Stored at: </span>
+                                <span id="store_path"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="sidebar_ref" class="col-xs-4"></div>
+			<div class="col-xs-8">
+				<form role="form">
+                    <div class="fieldset_background row">
+                        <fieldset id="request_target">
+                            <legend><span class="glyphicon glyphicon-screenshot"></span> Target</legend> 
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    <label for="protocol">Protocol</label>
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <select class="form-control small_padding" id="protocol"/> 
+                                                <option value="http" selected>http</option>
+                                                <option value="https">https</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="help-block hide">这里填写帮助信息.</span> 
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    <label for="host">Host</label>
+                                    <input class="form-control small_padding" type="text" id="host" placeholder="www.xxxxxxx.com" required/> 
+                                    <sapn class="error_message hide">Cannot accept empty value!</sapn>
+                                    <span class="help-block hide">help text.</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    <label for="uri">URI</label>
+                                    <input class="form-control small_padding" type="text" id="uri" placeholder="/one_piece/possession.json" required/> 
+                                    <sapn class="error_message hide" >Cannot accept empty value!</sapn>
+                                    <span class="help-block hide">help text.</span>
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    <label for="method">Method</label>
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <select class="form-control small_padding" id="method" /> 
+                                                <option value="GET" selected>GET</option>
+                                                <option value="POST">POST</option>
+                                                <option value="PUT">PUT</option>
+                                                <option value="PATCH">PATCH</option>
+                                                <option value="DELETE">DELETE</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <span class="help-block hide">这里填写帮助信息.</span> 
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="button" class="btn small_padding btn-danger right" id="reset_target" name="reset">Reset</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fieldset_background row">
+                        <fieldset id="request_auth">
+                            <legend><span class="glyphicon glyphicon-user"></span> Authorization</legend> 
+                            <div class="row">
+                                <div class="col-xs-6 form-group">
+                                    <label for="username">Username</label>
+                                    <input class="form-control small_padding" type="text" id="username" placeholder="username" /> 
+                                    <span class="help-block hide">help text.</span>
+                                </div>
+                                <div class="col-xs-6 form-group">
+                                    <label for="password">Password</label>
+                                    <input class="form-control small_padding" type="text" id="password" placeholder="password"/> 
+                                    <span class="help-block hide">help text.</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="button" class="btn small_padding btn-danger right" id="reset_auth" name="reset">Reset</button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fieldset_background row">
+                        <fieldset id="request_body">
+                            <legend><span class="glyphicon glyphicon-briefcase"></span> Body</legend> 
+                            <div class="row">
+                                <div class="col-xs-6 ">
+                                    <fieldset id="request_content_headers">
+                                        <legend>Content Headers</legend>
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="content_type">Content Type</label>
+                                                <select id="content_type" class="form-control small_padding">
+                                                    <option value="" selected>*/*</option>
+                                                    <option value="application/json">application/json</option>
+                                                    <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+                                                    <option value="application/xml">application/xml</option>
+                                                    <option value="application/javascript">application/javascript</option>
+                                                    <option value="application/xhtml+xml">application/xhtml+xml</option>
+                                                    <option value="text/html">text/html</option>
+                                                    <option value="text/javascript">text/javascript</option>
+                                                    <option value="text/css">text/css</option>
+                                                </select>
+                                                <span class="help-block hide">help text.</span>
+                                            </div>
+                                        </div>
+                                        <div class="row hide">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="encoding">Encoding</label>
+                                                <select id="encoding" class="form-control small_padding">
+                                                    <option value="utf-8" selected>utf-8</option>
+                                                    <option value="gzip">gzip</option>
+                                                    <option value="deflate">deflate</option>
+                                                    <option value="sdch">sdch</option>
+                                                </select>
+                                                <span class="help-block hide">help text.</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12 form-group">
+                                                <label for="content_md5">Content MD5</label>
+                                                <input class="form-control small_padding" type="text" id="content_md5" placeholder="Q3eewf45Iew98GEw34==" /> 
+                                                <span class="help-block hide">help text.</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button type="button" class="btn small_padding btn-danger right" id="reset_header" name="reset">Reset</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xs-6">
+                                    <fieldset id="request_custom_headers">
+                                        <legend>Custom Headers</legend>
+                                        <div class="row">
+                                            <div class="col-xs-12 ">
+                                                <label>Request parameters</label>
+                                                <div class="row form-group">
+                                                    <div class="col-xs-4 inline_input_padding_right">
+                                                        <label class="sr-only">Key</label>
+                                                        <input type="text" class="form-control small_padding" name="key" placeholder="header" disabled/>
+                                                    </div>
+                                                    <div class="col-xs-6 inline_input_padding_both">
+                                                        <label class="sr-only">Value</label>
+                                                        <input type="text" class="form-control small_padding" name="value" placeholder="value" disabled/>
+                                                    </div>
+                                                    <div class="col-xs-2 inline_input_padding_left">
+                                                        <label class="sr-only">Button</label>
+                                                        <button id="add_header" type="button" class="btn small_padding btn-success" name="add" style="width: 27px;">+</button>
+                                                    </div>
+                                                </div>
+                                                <span class="help-block hide">help text.</span>
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <button type="button" class="btn small_padding btn-danger right" id="reset_custom_header" name="reset">Reset</button>
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <fieldset id="request_data">
+                                        <legend>Request Data</legend>
+                                        <div class="row">
+                                            <div class="col-xs-12 ">
+                                                <label>Request parameters</label>
+                                                <div class="row form-group">
+                                                    <div class="col-xs-4 inline_input_padding_right">
+                                                        <label class="sr-only">Key</label>
+                                                        <input type="text" class="form-control small_padding" name="key" placeholder="key" disabled/>
+                                                    </div>
+                                                    <div class="col-xs-6 inline_input_padding_both">
+                                                        <label class="sr-only">Value</label>
+                                                        <input type="text" class="form-control small_padding" name="value" placeholder="value" disabled/>
+                                                    </div>
+                                                    <div class="col-xs-2 inline_input_padding_left">
+                                                        <label class="sr-only">Button</label>
+                                                        <button type="button" id="add_data" class="btn small_padding btn-success" name="add" style="width: 27px;">+</button>
+                                                    </div>
+                                                </div>
+                                                <span class="help-block hide">help text.</span>
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <button type="button" class="btn small_padding btn-danger right" id="reset_data" name="reset">Reset</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="col-xs-6">
+                                    <fieldset id="request_raw_data">
+                                        <div class="row form-group">
+                                            <div class="col-xs-12">
+                                                <legend>Raw Data</legend>
+                                                <label for="raw_body">Raw Body</label>
+                                                <textarea id="raw_body" class="form-control small_padding" style="resize: vertical;" rows="10" placeholder="JSON"></textarea>
+                                                <span class="help-block hide">help text.</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <button type="button" class="btn small_padding btn-danger right" id="reset_raw_data" name="reset">Reset</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="fieldset_background row">
+                        <button type="button" id="send_request" class="btn small_padding btn_margin btn-primary">Send</button>
+                        <button type="button" id="get_request" class="btn small_padding btn_margin btn-default">GET</button>
+                        <button type="button" id="post_request" class="btn small_padding btn_margin btn-default">POST</button>
+                        <button type="button" id="put_request" class="btn small_padding btn_margin btn-default">PUT</button>
+                        <button type="button" id="patch_request" class="btn small_padding btn_margin btn-default">PATCH</button>
+                        <button type="button" id="delete_request" class="btn small_padding btn_margin btn-default">DELETE</button>
+                    </div>
+                    <div class="fieldset_background row">
+                        <fieldset id="response">
+                            <legend><span class="glyphicon glyphicon-download-alt"></span> Response</legend>
+                            <div class="row form-group">
+                                <div class="col-xs-12">
+                                    <ul class="list-inline">
+                                        <li>
+                                            <a id="resp_headers_link" class="block_a color_a" href="#responseheaders">Response headers</a>
+                                        </li>
+                                        <li>
+                                            <a id="resp_json_link" class="block_a" href="#responsejson">Response json</a>
+                                        </li>
+                                        <li>
+                                            <a id="resp_text_link" class="block_a" href="#responsetext">Response text</a>
+                                        </li>
+                                        <li>
+                                            <a id="req_body_link" class="block_a" href="#requestbody">Request body</a>
+                                        </li>
+                                        <li>
+                                            <a id="req_headers_links" class="block_a" href="#requestheaders">Request headers</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <ul class="list-unstyled">
+                                        <li class>
+                                            <pre id="responseheaders" class="pre_format">hello world\nhehe\nwoshinidaye</pre>
+                                        </li>
+                                        <li class="hide">
+                                            <pre id="responsejson" class="pre_format"></pre>
+                                        </li>
+                                        <li class="hide">
+                                            <pre id="responsetext" class="pre_format"></pre>
+                                        </li>
+                                        <li class="hide">
+                                            <pre id="requestbody" class="pre_format"></pre>
+                                        </li>
+                                        <li class="hide">
+                                            <pre id="requestheaders" class="pre_format"></pre>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </fieldset>
+                    </div>
+                    <div class="fieldset_background row">
+                        <fieldset id="verification">
+                            <legend><span class="glyphicon glyphicon-search"></span> Verification</legend>
+                            <div class="row">
+                                <div class="col-xs-2">
+                                    <label for="status_code">Status Code</label>
+                                    <input type="text" id="status_code" class="form-group form-control small_padding" placeholder="404" required/>
+                                    <sapn class="error_message hide" >Cannot accept empty value!</sapn>
+                                    <span class="help-block hide">help text.</span>
+                                </div>
+                                <div class="col-xs-6" id="verification_data">
+                                    <label class="row">Verification</label>
+                                        <div class="row form-group">
+                                            <div class="col-xs-11 inline_input_padding_both">
+                                                <label class="sr-only">Value</label>
+                                                <input type="text" class="form-control small_padding" name="value" placeholder="id, {id:12}, {data:{name:hero}}" disabled/>
+                                            </div>
+                                            <div class="col-xs-1 inline_input_padding_left">
+                                                <label class="sr-only">Button</label>
+                                                <button type="button" id="add_verification" class="btn small_padding btn-success" name="add" style="width: 27px;">+</button>
+                                            </div>
+                                        </div>
+                                        <span class="help-block hide row">help text.</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button type="button" id="reset_verification" name="reset" class="btn small_padding btn-danger right">Reset</button>
+                                </div>
+                            </div>
+                            
+                        </fieldset>
+                    </div>
+                    <div class="fieldset_background row">
+                        <fieldset id="archive">
+                            <legend><span class="glyphicon glyphicon-saved"></span> Archive</legend>
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <label for="case_name">Name</label>
+                                    <input type="text" id="case_name" class="form-control small_padding form-group" placeholder="login_api" required/>
+                                    <sapn class="error_message hide" >Cannot accept empty value!</sapn>
+                                    <span class="help-block hide">help text.</span>
+                                </div> 
+                                <div class="col-xs-2">
+                                    <label for="tags" class="row">Tags</label>
+                                    <div class="row form-group">
+                                        <div class="col-xs-10 inline_input_padding_both">
+                                            <label class="sr-only">Value</label>
+                                            <input type="text" class="form-control small_padding" name="value" placeholder="regression" disabled/>
+                                        </div>
+                                        <div class="col-xs-2 inline_input_padding_left">
+                                            <label class="sr-only">Button</label>
+                                            <button id="add_tags" type="button" class="btn small_padding btn-success" name="add" style="width: 27px;">+</button>
+                                        </div>
+                                    </div>
+                                    <span class="help-block hide row">help text.</span>
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-1">
+                                    <button id="save_case" type="button" class="btn btn-primary">Save</button>
+                                </div> 
+                                <div class="col-xs-1">
+                                    <button type="button" id="reset_case" name="reset" class="btn btn-danger">Reset</button>
+                                </div> 
+                            </div>
+                        </fieldset>
+                    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script language="javascript" type="text/javascript" src="local.js"></script>
+    <script language="javascript" type="text/javascript">
+    </script>
+  </body>
+</html>
