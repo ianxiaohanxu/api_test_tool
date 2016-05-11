@@ -15,6 +15,30 @@ $($(".side_bar").width(function(){
 //Set side bar height
 $($(".side_bar").height($(window).height()-50));
 
+//Set button bar width
+$($("#send_request").parent().width(parseInt($("form").children("div").first().css("width"))+20));
+$($(".progress").parent().width(parseInt($("form").children("div").first().css("width"))+20));
+
+//Set button bar fixed or not
+$(window).scroll(function(){
+    var offset_top_data_body = $("form>div").eq(2).offset()["top"];
+    var height_data_body = parseInt($("form>div").eq(2).css("height")) + parseInt($("form>div").eq(2).css("margin-bottom"));
+    var height_button_bar = parseInt($("form>div").eq(3).css("margin-top")) + parseInt($("form>div").eq(3).css("height"));
+    var target_height = offset_top_data_body + height_data_body + height_button_bar - $(window).height();
+    if (target_height <= $(document).scrollTop()) {
+        $("form>div").eq(3).removeClass("fixed_box");
+    }
+    else {
+        $("form>div").eq(3).addClass("fixed_box");
+    }
+    if (target_height <= $(document).scrollTop()) {
+        $("form>div").eq(4).removeClass("fixed_box");
+    }
+    else {
+        $("form>div").eq(4).addClass("fixed_box");
+    }
+});
+
 //Set case box height
 $(set_case_list_height());
 
@@ -31,6 +55,24 @@ $(window).resize(function(){
     var width = $("#sidebar_ref").width();
     $(".side_bar").width(width).height($(window).height()-50);
     set_case_list_height();
+    $("#send_request").parent().width($("form").children("div").first().width());
+    $(".progress").parent().width($("form").children("div").first().width());
+    var offset_top_data_body = $("form>div").eq(2).offset()["top"];
+    var height_data_body = parseInt($("form>div").eq(2).css("height")) + parseInt($("form>div").eq(2).css("margin-bottom"));
+    var height_button_bar = parseInt($("form>div").eq(3).css("margin-top")) + parseInt($("form>div").eq(3).css("height"));
+    var target_height = offset_top_data_body + height_data_body + height_button_bar - $(window).height();
+    if (target_height <= $(document).scrollTop()) {
+        $("form>div").eq(3).removeClass("fixed_box");
+    }
+    else {
+        $("form>div").eq(3).addClass("fixed_box");
+    }
+    if (target_height <= $(document).scrollTop()) {
+        $("form>div").eq(4).removeClass("fixed_box");
+    }
+    else {
+        $("form>div").eq(4).addClass("fixed_box");
+    }
 });
 
 //Attach event for "+" button
@@ -193,11 +235,10 @@ function get_resp(request_data, api_name) {
             if ((data["response_status"] < 300) && (api_name != undefined) && !(api_name in response_list)) {
                 response_list[api_name] = JSON.parse(data["response_json"]);
             }
-        }
-    });
-    resp.done(function(data) {
-        if ((data["response_status"] < 300) && (api_name != undefined) && !(api_name in response_list)) {
-            response_list[api_name] = JSON.parse(data["response_json"]);
+            else if (data["response_status"] >= 300) {
+                alert("Request fail for parent api: " + api_name);
+                throw "Request fail for parent api: "+api_name;
+            }
         }
     });
     return resp;
@@ -205,31 +246,21 @@ function get_resp(request_data, api_name) {
 
 function send_request(){
     if (validation_check($("#request_target"))){
-        var request_body = get_data();
-        request_body = data_update(request_body);
-        var resp = $.ajax("/", {
-            "contentType": "application/json; charset=UTF-8",
-            "method": "POST",
-            "data": JSON.stringify(request_body)
-        });
-        resp.done(function(data){
-            var status_code = "Status Code: ";
-            status_code = "<b>"+status_code+data["response_status"].toString()+"</b>";
-            var headers = status_code+"<br/>"+data["response_headers"];
-            headers = headers.replace(/[\{\}\[\],]/g, function(match){
-                if (match=="}" || match=="]") {
-                    return "<br/>"+match+"<br/>";
-                }
-                else {
-                    return match+"<br/>";
-                }
+        try {
+            $("form>div").eq(3).addClass("hide");
+            $("form>div").eq(4).removeClass("hide");
+            var request_body = get_data();
+            request_body = data_update(request_body);
+            var resp = $.ajax("/", {
+                "contentType": "application/json; charset=UTF-8",
+                "method": "POST",
+                "data": JSON.stringify(request_body)
             });
-            $("#responseheaders").html(headers);
-            if (data["response_json"]=="{}") {
-                $("#responsejson").text(null);
-            }
-            else {
-                var json = data["response_json"].replace(/[\{\}\[\],]/g, function(match){
+            resp.done(function(data){
+                var status_code = "Status Code: ";
+                status_code = "<b>"+status_code+data["response_status"].toString()+"</b>";
+                var headers = status_code+"<br/>"+data["response_headers"];
+                headers = headers.replace(/[\{\}\[\],]/g, function(match){
                     if (match=="}" || match=="]") {
                         return "<br/>"+match+"<br/>";
                     }
@@ -237,14 +268,36 @@ function send_request(){
                         return match+"<br/>";
                     }
                 });
-                $("#responsejson").html(json);
-            }
-            $("#responsetext").text(data["response_text"]);
-            if (data["request_body"]==null) {
-                $("#requestbody").text("null");
-            }
-            else {
-                $("#requestbody").html(data["request_body"].replace(/[\{\}\[\],]/g, function(match){
+                $("#responseheaders").html(headers);
+                if (data["response_json"]=="{}") {
+                    $("#responsejson").text(null);
+                }
+                else {
+                    var json = data["response_json"].replace(/[\{\}\[\],]/g, function(match){
+                        if (match=="}" || match=="]") {
+                            return "<br/>"+match+"<br/>";
+                        }
+                        else {
+                            return match+"<br/>";
+                        }
+                    });
+                    $("#responsejson").html(json);
+                }
+                $("#responsetext").text(data["response_text"]);
+                if (data["request_body"]==null) {
+                    $("#requestbody").text("null");
+                }
+                else {
+                    $("#requestbody").html(data["request_body"].replace(/[\{\}\[\],]/g, function(match){
+                        if (match=="}" || match=="]") {
+                            return "<br/>"+match+"<br/>";
+                        }
+                        else {
+                            return match+"<br/>";
+                        }
+                    }));
+                }
+                $("#requestheaders").html(data["request_headers"].replace(/[\{\}\[\],]/g, function(match){
                     if (match=="}" || match=="]") {
                         return "<br/>"+match+"<br/>";
                     }
@@ -252,21 +305,21 @@ function send_request(){
                         return match+"<br/>";
                     }
                 }));
-            }
-            $("#requestheaders").html(data["request_headers"].replace(/[\{\}\[\],]/g, function(match){
-                if (match=="}" || match=="]") {
-                    return "<br/>"+match+"<br/>";
-                }
-                else {
-                    return match+"<br/>";
-                }
-            }));
-            $("#response").children("div").eq(1).find("li").attr("class", "hide");
-            $("#responseheaders").parent().removeClass("hide");
-            $("#response a").removeClass("color_a");
-            $("#resp_headers_link").addClass("color_a");
-            $(document).scrollTop($("#response").parent().prev().offset()["top"]);
-        });
+                $("#response").children("div").eq(1).find("li").attr("class", "hide");
+                $("#responseheaders").parent().removeClass("hide");
+                $("#response a").removeClass("color_a");
+                $("#resp_headers_link").addClass("color_a");
+                $(document).scrollTop($("#response").parent().prev().offset()["top"]);
+            });
+            resp.always(function(){
+                $("form>div").eq(4).addClass("hide");
+                $("form>div").eq(3).removeClass("hide");
+            });
+        }
+        catch (err) {
+            $("form>div").eq(4).addClass("hide");
+            $("form>div").eq(3).removeClass("hide");
+        };
     };
 }
 
